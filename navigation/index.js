@@ -80,7 +80,7 @@ const AppContainer = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode={"none"}>
+      <Stack.Navigator headerMode="none">
         <Stack.Screen name="App" component={AppNavigation} />
         <Stack.Screen name="Auth" component={AuthStack} />
       </Stack.Navigator>

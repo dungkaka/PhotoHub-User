@@ -8,7 +8,7 @@ const Drawer = createDrawerNavigator();
 
 const Container = () => {
   const dimensions = useWindowDimensions();
-  const widthDrawer = Math.ceil(0.6 * dimensions.width);
+  const widthDrawer = Math.ceil(0.9 * dimensions.width);
 
   return (
     <Drawer.Navigator
@@ -20,6 +20,7 @@ const Container = () => {
       drawerContent={(props) => {
         return <TagSelector {...props} />;
       }}
+      sceneContainerStyle={{ backgroundColor: "transparent" }}
     >
       <Drawer.Screen
         name="HubContainer"

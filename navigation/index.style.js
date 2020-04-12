@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
     shadowColor: "#FFF",
     shadowOffset: {
       width: 0,
-      height: 8
+      height: 8,
     },
     shadowOpacity: 0.44,
     shadowRadius: 10.32,
-    elevation: 5
+    elevation: 5,
     // overflow: 'scroll',
     // borderWidth: 1,
   },
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     marginBottom: 16,
     borderColor: "white",
-    borderWidth: StyleSheet.hairlineWidth
-  }
+    borderWidth: StyleSheet.hairlineWidth,
+  },
 });
 
 export default styles;

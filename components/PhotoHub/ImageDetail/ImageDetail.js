@@ -1,69 +1,95 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Button, Text } from "expo-ui-kit/src";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { styles } from "./style.index";
+import { FontAwesome } from "@expo/vector-icons";
+import SimilarItem from "./SimilarItem";
+import { random_color } from "../../../utils/f";
 
 const ImageDetail = () => {
   const navigation = useNavigation();
   // route fo from HubContainer
   const route = useRoute();
-  const { name, likes, id, tags, dung } = route.params || {};
-
-  console.log("Image Detail Render");
+  const { name, likes, id, tags, url } = route.params || {};
   return (
-    <View>
-      <Text> {name} </Text>
-      <Text> {likes} </Text>
-      <Text> {dung} </Text>
-      <Text> {tags} </Text>
-      <Button
-        onPress={() => {
-          navigation.navigate("Hub");
-        }}
-      >
-        <Text white> NAVIGATE HOME </Text>
-      </Button>
+    <ScrollView>
+      <View>
+        {/* Image */}
+        <Image
+          source={{
+            uri: url,
+            width: null,
+            height: 350,
+            scale: 0.05,
+          }}
+        ></Image>
 
-      <Button
-        onPress={() => {
-          navigation.navigate("Hub", { hehe: "234" });
-        }}
-      >
-        <Text white> NAVIGATE PARAMS HOME </Text>
-      </Button>
+        {/* Title Of Image */}
+        <View
+          style={{ padding: 10, flexDirection: "row", alignItems: "center" }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: 8,
+              paddingVertical: 2,
+              backgroundColor: "#f74f31",
+              color: "white",
+              borderRadius: 15,
+              fontWeight: "bold",
+              fontSize: 15,
+            }}
+          >
+            Favorite
+          </Text>
+          <Text style={{ fontSize: 20, marginLeft: 10 }}>{name}</Text>
+        </View>
 
-      <Button
-        onPress={() => {
-          navigation.navigate("Image Detail");
-        }}
-      >
-        <Text white> NAVIGATE DETAIL </Text>
-      </Button>
+        {/* Detail Of Image */}
+        <View
+          style={{
+            padding: 10,
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          {/* Description and Tag */}
+          <View style={{ flex: 1 }}>
+            <Text> Tags </Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+              {tags.map((item) => {
+                return (
+                  <Text
+                    style={{ ...styles.tag, backgroundColor: random_color() }}
+                  >
+                    {" "}
+                    {item}{" "}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "stretch",
+            }}
+          >
+            {/* Button Like */}
+            <TouchableOpacity style={[styles.buttonAction, styles.shawdowBox]}>
+              <FontAwesome name="heart" color="red"></FontAwesome>
+              <Text style={styles.textAction}> Like </Text>
+            </TouchableOpacity>
 
-      <Button
-        onPress={() => {
-          navigation.navigate("Image Detail", { dung: Math.random() });
-        }}
-      >
-        <Text white> NAVIGATE PARAMS DETAIL </Text>
-      </Button>
-
-      <Button
-        onPress={() => {
-          navigation.push("Image Detail");
-        }}
-      >
-        <Text white> PUSH DETAIL </Text>
-      </Button>
-
-      <Button
-        onPress={() => {
-          navigation.replace("Image Detail");
-        }}
-      >
-        <Text white> REPLACE DETAIL </Text>
-      </Button>
-    </View>
+            {/* Button Add To Collection */}
+            <TouchableOpacity style={[styles.buttonAction, styles.shawdowBox]}>
+              <Text style={styles.textAction}> Collection </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <SimilarItem></SimilarItem>
+      </View>
+    </ScrollView>
   );
 };
 

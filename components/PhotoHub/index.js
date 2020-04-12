@@ -12,28 +12,24 @@ const Stack = createStackNavigator();
 const PhotoHub = ({ navigation, style }) => {
   return (
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
-      <Stack.Navigator
-        screenOptions={{
-          headerTransparent: false,
-          headerTitle: null,
-          headerLeft: () => {
-            return (
-              <Button
-                primary
-                padding
-                marginHorizontal
-                onPress={() => navigation.openDrawer()}
-              >
-                <Text white small>
-                  MENU
-                </Text>
-              </Button>
-            );
-          },
-        }}
-      >
-        <Stack.Screen name="Hub" component={Hub} />
-        <Stack.Screen name="Image Detail" component={ImageDetail} />
+      <Stack.Navigator headerMode="float">
+        <Stack.Screen
+          cardStyle={{ backgroundColor: "transparent" }}
+          options={{
+            title: null,
+            headerTransparent: true,
+          }}
+          name="Hub"
+          component={Hub}
+        />
+        <Stack.Screen
+          name="Image Detail"
+          component={ImageDetail}
+          options={{
+            headerTransparent: true,
+            headerShown: true,
+          }}
+        />
       </Stack.Navigator>
     </Animated.View>
   );
