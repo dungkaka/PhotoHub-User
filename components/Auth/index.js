@@ -4,14 +4,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import styles from "./index.style";
 import Signup from "./Signup";
 import Login from "./Login";
+import { useFocusEffect } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 const Stack = createStackNavigator();
 
 const AuthStack = ({ navigation }) => {
   return (
     <Stack.Navigator
+      headerMode="none"
       screenOptions={{
-        headerTransparent: false,
+        headerTransparent: true,
         headerTitle: null,
         headerLeft: () => {
           return (
@@ -19,14 +22,14 @@ const AuthStack = ({ navigation }) => {
               primary
               padding
               marginHorizontal
-              onPress={() => navigation.openDrawer()}
+              onPress={() => navigation.navigate("App")}
             >
               <Text white small>
                 MENU
               </Text>
             </Button>
           );
-        }
+        },
       }}
     >
       <Stack.Screen name="Login" component={Login} />

@@ -3,22 +3,25 @@ import { View, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Button, Text } from "expo-ui-kit/src";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { styles } from "./style.index";
-import { FontAwesome } from "@expo/vector-icons";
+
 import SimilarItem from "./SimilarItem";
 import { random_color } from "../../../utils/f";
+import LikeImage from "./LikeImage";
+import AddToCollection from "./AddToCollection";
+import AddToCollectionButton from "./AddToCollectionButton";
 
 const ImageDetail = () => {
   const navigation = useNavigation();
   // route fo from HubContainer
   const route = useRoute();
-  const { name, likes, id, tags, url } = route.params || {};
+  const { image } = route.params || {};
   return (
     <ScrollView>
       <View>
         {/* Image */}
         <Image
           source={{
-            uri: url,
+            uri: image.url,
             width: null,
             height: 350,
             scale: 0.05,
@@ -40,9 +43,9 @@ const ImageDetail = () => {
               fontSize: 15,
             }}
           >
-            Favorite
+            Popular
           </Text>
-          <Text style={{ fontSize: 20, marginLeft: 10 }}>{name}</Text>
+          <Text style={{ fontSize: 20, marginLeft: 10 }}>{image.name}</Text>
         </View>
 
         {/* Detail Of Image */}
@@ -57,9 +60,10 @@ const ImageDetail = () => {
           <View style={{ flex: 1 }}>
             <Text> Tags </Text>
             <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-              {tags.map((item) => {
+              {image.tags.map((item) => {
                 return (
                   <Text
+                    key={item}
                     style={{ ...styles.tag, backgroundColor: random_color() }}
                   >
                     {" "}
@@ -76,15 +80,10 @@ const ImageDetail = () => {
             }}
           >
             {/* Button Like */}
-            <TouchableOpacity style={[styles.buttonAction, styles.shawdowBox]}>
-              <FontAwesome name="heart" color="red"></FontAwesome>
-              <Text style={styles.textAction}> Like </Text>
-            </TouchableOpacity>
+            <LikeImage imageId={image.id} likeBy={image.like_by}></LikeImage>
 
             {/* Button Add To Collection */}
-            <TouchableOpacity style={[styles.buttonAction, styles.shawdowBox]}>
-              <Text style={styles.textAction}> Collection </Text>
-            </TouchableOpacity>
+            <AddToCollectionButton image={image}></AddToCollectionButton>
           </View>
         </View>
         <SimilarItem></SimilarItem>

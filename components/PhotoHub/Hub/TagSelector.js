@@ -15,7 +15,6 @@ const TagSelector = ({ navigation }) => {
   const getTags = async () => {
     try {
       const response = await request.server.get(URL.GET_TAGS());
-      console.log("TAGSTAGS", response.data);
       setTags(response.data.tags);
     } catch (error) {}
   };
@@ -38,16 +37,24 @@ const TagSelector = ({ navigation }) => {
   };
 
   const renderTag = (tag) => {
-    return <Tag tag={tag} onSelect={onSelectTag} reset={resetSelector}></Tag>;
+    return (
+      <Tag
+        key={tag.id}
+        tag={tag}
+        onSelect={onSelectTag}
+        reset={resetSelector}
+      ></Tag>
+    );
   };
 
   const renderListCategory = (item) => {
     return (
       <View
+        key={item.category}
         style={{
           paddingVertical: 10,
           borderBottomWidth: 1,
-          borderBottomColor: "lightgray",
+          borderBottomColor: "#ebebeb",
         }}
       >
         <View>
@@ -57,13 +64,12 @@ const TagSelector = ({ navigation }) => {
           </Text>
         </View>
         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          {item.tags.map((tag, index) => renderTag(tag))}
+          {item.tags.map((tag) => renderTag(tag))}
         </View>
       </View>
     );
   };
 
-  console.log("Toggle drawer");
 
   return (
     <View style={{ flex: 1 }}>
@@ -71,7 +77,7 @@ const TagSelector = ({ navigation }) => {
         <View style={{ marginTop: 10 }}>
           <Text style={styles.tagTitle}> FILTER </Text>
         </View>
-        <View>{tags.map((item, index) => renderListCategory(item))}</View>
+        <View>{tags.map((item) => renderListCategory(item))}</View>
       </ScrollView>
 
       <View
@@ -97,6 +103,7 @@ const TagSelector = ({ navigation }) => {
           onPress={() =>
             navigation.navigate("HubContainer", {
               tags: tagSelector.current,
+              fromTagSelector: true,
             })
           }
         >

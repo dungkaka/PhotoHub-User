@@ -14,7 +14,6 @@ const PhotoHub = ({ navigation, style }) => {
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
       <Stack.Navigator headerMode="float">
         <Stack.Screen
-          cardStyle={{ backgroundColor: "transparent" }}
           options={{
             title: null,
             headerTransparent: true,

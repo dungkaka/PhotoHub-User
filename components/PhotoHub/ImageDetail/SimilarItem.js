@@ -9,7 +9,9 @@ const SimilarItem = () => {
 
   return (
     <View>
-      <Text style={{ margin: 10, fontWeight: "bold" }}>You also can like</Text>
+      <Text style={{ margin: 10, fontWeight: "bold" }}>
+        You also may want to see
+      </Text>
       <FlatList
         style={{ paddingHorizontal: 10, marginBottom: 10 }}
         horizontal

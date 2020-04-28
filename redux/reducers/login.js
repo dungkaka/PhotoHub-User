@@ -2,31 +2,33 @@ import { LOGIN } from "./../../constant/constant";
 
 const initState = () => {
   return {
-    loading: false,
     error: null,
     user: null,
+    status: null,
   };
 };
 
 export default (state = initState(), { type, payload }) => {
   switch (type) {
-    case LOGIN.LOGIN_REQUEST:
-      return { ...state, loading: true };
-
     case LOGIN.LOGIN_SUCCESS:
       const user = payload.user;
       return {
         ...state,
         user: user,
-        loading: false,
         error: null,
+        status: "log-in",
       };
 
     case LOGIN.LOGIN_FAIL:
       return {
         ...state,
-        loading: false,
         error: payload.error,
+      };
+
+    case "LOGOUT":
+      return {
+        ...state,
+        status: "log-out",
       };
 
     default:

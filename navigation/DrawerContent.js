@@ -1,37 +1,39 @@
 import React from "react";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { Block, Text, Button } from "expo-ui-kit";
-import { Image, View } from "react-native";
+import { Image, View, Alert, BackHandler } from "react-native";
 import styles from "./index.style";
-import { Feather, AntDesign } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import {
+  MaterialCommunityIcons,
+  AntDesign,
+  FontAwesome5,
+} from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+
+const background = require("./../assets/images/logo-4.png");
 
 const Header = (props) => {
-  const user = useSelector((store) => store.user);
+  const navigation = props.rootNavigation;
+  const { user } = useSelector((store) => store.user);
 
-  if (user.user == null) {
+  if (user == null) {
     return (
       <View style={{ marginHorizontal: 20, marginBottom: 20 }}>
-        <Image
-          source={{
-            uri:
-              "https://react-ui-kit.com/assets/img/react-ui-kit-logo-green.png",
-            height: 60,
-            width: 60,
-            scale: 0.5,
-          }}
-          resizeMode="center"
-          style={styles.avatar}
-        />
-        <Text white title>
-          PHOTOHUB
-        </Text>
-        <Text white size={12}>
+        <View style={{ flexDirection: "row", height: 30 }}>
+          <Image
+            source={background}
+            style={{ width: "100%", height: "100%" }}
+            // resizeMode="center"
+          />
+        </View>
+
+        <Text white size={14}>
           hdbluetc@gmail.com
         </Text>
-        <View style={{ flex: 0, flexDirection: "row" }}>
+        <View style={{ flexDirection: "row" }}>
           <Button
             style={{
+              flexDirection: "row",
               backgroundColor: "lightgray",
               paddingVertical: 5,
               paddingHorizontal: 20,
@@ -43,8 +45,17 @@ const Header = (props) => {
               borderWidth: 1,
               borderColor: "white",
             }}
-            onPress={() => props.navigation.navigate("Auth")}
+            onPress={() => {
+              // props.navigation.closeDrawer();
+              navigation.navigate("Auth");
+            }}
           >
+            <AntDesign
+              name="login"
+              color="white"
+              size={20}
+              style={{ marginRight: 5 }}
+            />
             <Text style={{ color: "white" }}> LOGIN </Text>
           </Button>
         </View>
@@ -53,11 +64,18 @@ const Header = (props) => {
   } else {
     return (
       <View style={{ marginHorizontal: 20, marginBottom: 20 }}>
+        <View style={{ flexDirection: "row", height: 30 }}>
+          <Image
+            source={background}
+            style={{ width: "100%", height: "100%" }}
+            // resizeMode="center"
+          />
+        </View>
         <Text white title>
-          {user.user.username}
+          {user.name ? user.name : user.username}
         </Text>
-        <Text white size={10}>
-          {user.user.email}
+        <Text white size={12}>
+          {user.email}
         </Text>
       </View>
     );
@@ -65,6 +83,9 @@ const Header = (props) => {
 };
 
 const DrawerContent = (props) => {
+  const navigation = props.navigation;
+  const dispatch = useDispatch();
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -93,42 +114,58 @@ const DrawerContent = (props) => {
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
             icon={() => (
-              <AntDesign
-                name="dashboard"
+              <MaterialCommunityIcons
+                name="image-search"
                 color="white"
-                size={18}
+                size={20}
                 style={{ marginRight: -16 }}
               />
             )}
-            onPress={() => props.navigation.navigate("PhotoHub")}
+            onPress={() => navigation.jumpTo("PhotoHub")}
           />
           <DrawerItem
             label="Collection"
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
             icon={() => (
-              <AntDesign
-                name="message1"
+              <MaterialCommunityIcons
+                name="image-album"
                 color="white"
-                size={18}
+                size={20}
                 style={{ marginRight: -16 }}
               />
             )}
-            onPress={() => props.navigation.navigate("Collection")}
+            onPress={() => navigation.jumpTo("Collection")}
           />
+
+          <DrawerItem
+            label="Booking"
+            labelStyle={styles.drawerLabel}
+            style={styles.drawerItem}
+            icon={() => (
+              <FontAwesome5
+                name="map-marked-alt"
+                color="white"
+                size={20}
+                style={{ marginRight: -16 }}
+              />
+            )}
+            onPress={() => navigation.jumpTo("PhotographerConnection")}
+          />
+
           <DrawerItem
             label="About"
             labelStyle={styles.drawerLabel}
             style={styles.drawerItem}
             icon={() => (
-              <AntDesign
-                name="message1"
+              <MaterialCommunityIcons
+                name="information-variant"
                 color="white"
-                size={18}
+                size={20}
                 style={{ marginRight: -16 }}
               />
             )}
-            onPress={() => props.navigation.navigate("About")}
+            onPress={() => navigation.jumpTo("About")}
           />
         </View>
 
@@ -141,9 +178,30 @@ const DrawerContent = (props) => {
         >
           <DrawerItem
             label="Logout"
-            labelStyle={{ color: "white" }}
-            icon={() => <AntDesign name="logout" color="white" size={18} />}
-            onPress={() => alert("Are your sure to logout?")}
+            labelStyle={[
+              styles.drawerLabel,
+              { color: "white", marginBottom: 5 },
+            ]}
+            icon={() => <AntDesign name="logout" color="white" size={20} />}
+            onPress={() => {
+              Alert.alert(
+                "Alert",
+                "Are you sure to logout !",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel",
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => dispatch({ type: "LOGOUT" }),
+                  },
+                ],
+
+                { cancelable: false }
+              );
+            }}
           />
         </View>
       </View>

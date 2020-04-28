@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: "hidden",
   },
-  image: {},
   tagTitle: {
     marginVertical: 10,
     fontSize: 24,

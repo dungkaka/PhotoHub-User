@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import { rootReducer } from "./../reducers/root-reducer";
+import { appReducer } from "./../reducers/root-reducer";
+import request from "./../../utils/axios";
+import axios from "axios";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(appReducer, applyMiddleware(thunk));
 
 // const store = createStore(appReducer, applyMiddleware(thunk));
 

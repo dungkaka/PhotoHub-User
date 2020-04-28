@@ -6,7 +6,6 @@ import { AsyncStorage } from "react-native";
 
 export const login = (user) => {
   return async (dispatch) => {
-    dispatch(requestLogin());
     try {
       const response = await axios.post(URL.LOGIN(), {
         username: user.username,
@@ -16,21 +15,22 @@ export const login = (user) => {
       const data = response.data;
 
       if (data.status == true) {
-        AsyncStorage.setItem("jwtToken", data.access_token);
+        dispatch(loginSuccess({ user: data.user }));
+        AsyncStorage.setItem("userToken", data.access_token);
+        AsyncStorage.setItem("user", data.user);
 
         request.server = await axios.create({
           headers: {
             Authorization: "Bearer " + data.access_token,
+            // timeout: 5,
             "Content-Type": "application/json",
           },
         });
-
-        dispatch(loginSuccess({ user: data.user }));
       } else {
-        throw new Error(data.errors);
+        throw new Error(data.message);
       }
     } catch (error) {
-      dispatch(loginFail(error));
+      dispatch(loginFail(error.message));
     }
   };
 };

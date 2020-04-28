@@ -4,7 +4,6 @@ import { Block } from "expo-ui-kit";
 import { Button, Text } from "expo-ui-kit/src";
 
 const About = ({ navigation }) => {
-  console.log("ABOUT NE");
   return (
     <View
       style={{

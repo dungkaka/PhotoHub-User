@@ -2,8 +2,8 @@ import axios from "axios";
 
 const request = {
   server: axios.create({
+    // timeout: 5,
     headers: {
-      Authorization: "Bearer ",
       "Content-Type": "application/json",
     },
   }),
@@ -29,5 +29,3 @@ export const setToken = async (token) => {
 };
 
 export default request;
-
-const somthing = (...args) => {};

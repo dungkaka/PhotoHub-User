@@ -1,8 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Block } from "expo-ui-kit";
+import { useGoBackHandler } from "../../utils/custom-hook";
 
-const Signup = () => {
+const Signup = (props) => {
+  useGoBackHandler(props.navigation);
+
   return (
     <Block center middle>
       <Text> Signup </Text>

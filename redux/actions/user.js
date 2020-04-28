@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 import request from "../../utils/axios";
 import { URL } from "../../configs/end-points-url";
+import { loginSuccess } from './login';
 
 export const setUser = (user) => ({
   type: "SET_USER_SUCCESS",

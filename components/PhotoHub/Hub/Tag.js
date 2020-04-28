@@ -7,9 +7,7 @@ const Tag = ({ tag, onSelect, reset }) => {
   const [selected, setSetlected] = useState(false);
   const [randomColor, setRandomColor] = useState();
 
-  useEffect(() => {
-    console.log(tag.name.en);
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     setSetlected(false);

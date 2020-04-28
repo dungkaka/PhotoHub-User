@@ -11,7 +11,12 @@ export default (state = initState(), { type, payload }) => {
     case "SET_USER_START":
       return { ...state, isFetching: true };
     case "SET_USER_SUCCESS":
-      return { ...state, user: payload.user, isFetching: false, error: "" };
+      return {
+        ...state,
+        user: payload.user,
+        isFetching: false,
+        error: "",
+      };
     case "SET_USER_FAIL":
       return { ...state, isFetching: false, error: payload.error };
 

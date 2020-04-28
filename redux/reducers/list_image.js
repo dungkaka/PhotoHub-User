@@ -10,15 +10,11 @@ const initState = () => {
 
 export default (state = initState(), { type, payload }) => {
   switch (type) {
-    // case GET_LIST_IMAGE.GET_LIST_IMAGE_START:
-    //   state.loading = true;
-    //   return state;
 
     case GET_LIST_IMAGE.GET_LIST_IMAGE_SUCCESS:
       const { listImage, after } = payload;
       // Case after == "" that mean start app, refresh
       // Case after != "" that mean fetchMore
-      console.log("REDUCER", payload.after);
       if (listImage.length > 0) {
         // Case not end of the List
         if (after == "")
@@ -28,7 +24,6 @@ export default (state = initState(), { type, payload }) => {
             pageIndex: 1,
             error: null,
           };
-        else console.log("AFTER NOT EMTY");
         return {
           ...state,
           listImage: [...state.listImage, ...listImage],
