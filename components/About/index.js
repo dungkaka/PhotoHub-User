@@ -22,11 +22,31 @@ const About = ({ navigation }) => {
             backgroundColor: "blue",
             flex: 0.5,
           }}
+        ></View>
+        <View
+          style={{
+            backgroundColor: "white",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          {/* <View style={{ flex: 1 }}></View>
-          <View style={{ flex: 0.5, backgroundColor: "black" }}></View> */}
+          <View
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: "pink",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 20,
+                height: 10,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          />
         </View>
-        <View style={{ backgroundColor: "red", flex: 1 }}></View>
       </View>
       <View style={{ flexDirection: "row" }}>
         <Button

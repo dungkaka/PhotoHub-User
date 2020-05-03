@@ -9,9 +9,10 @@ const styles = StyleSheet.create({
       width: -8,
       height: 8,
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: 1,
     shadowRadius: 10,
     elevation: 8,
+    backgroundColor: "#000",
     // overflow: 'scroll',
     // borderWidth: 1
   },

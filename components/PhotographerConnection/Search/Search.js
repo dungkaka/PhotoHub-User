@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  StyleSheet,
 } from "react-native";
 import { color, delay } from "./../../../utils/f";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "./index.style";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import { hereKeyAPI } from "./../../../configs/placeAPI";
 import axios from "axios";
+import { useGoBackHandler } from "./../../../utils/custom-hook";
 
 const baseUrl =
   "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?";
@@ -25,10 +26,13 @@ const Search = () => {
   const canSearch = useRef(true);
   let timeOutSearch = 0;
 
+  useGoBackHandler(navigation);
+
   useEffect(() => {
     const i = setInterval(() => {
       canSearch.current = true;
-    }, 2000);
+    }, 1600);
+
     return () => {
       clearInterval(i);
     };
@@ -70,6 +74,48 @@ const Search = () => {
     }, 1000);
   };
 
+  const renderItem = (item) => {
+    const { street, district, city, country, label } = item.address
+      ? item.address
+      : {};
+
+    const labelLocation = street
+      ? street
+      : district
+      ? district
+      : city
+      ? city
+      : null;
+    const describe = `${street ? street + ", " : ""}${
+      district ? district + ", " : ""
+    }${city ? city : ""}`;
+    return (
+      <View style={styles.itemLocation}>
+        <Entypo
+          name="location-pin"
+          style={[
+            styles.typeIcon,
+            { color: "black", fontSize: 18, paddingLeft: 0 },
+          ]}
+        ></Entypo>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("MapScreen", {
+              type: "SEARCH",
+              payload: {
+                location: item,
+                labelLocation: describe,
+              },
+            });
+          }}
+        >
+          <Text style={styles.label}>{labelLocation}</Text>
+          <Text style={styles.describeItem}>{describe}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   // const searchLocation = async (value) => {
   //   if (value.length == 0) {
   //     setSearchResult([]);
@@ -99,48 +145,47 @@ const Search = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.inputContainer}>
-        <MaterialCommunityIcons
-          name="lastpass"
-          style={styles.inputIcon}
-        ></MaterialCommunityIcons>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => {
-            textRef.current = value;
-            searchLocation(textRef.current);
-          }}
-        />
+      <View style={styles.headerContainer}>
+        <View style={styles.boxSeach}>
+          <Entypo name="location-pin" style={styles.typeIcon}></Entypo>
+          <TextInput
+            placeholder="Search for a location"
+            placeholderTextColor={color.gray5}
+            autoFocus={true}
+            style={styles.type}
+            onChangeText={(value) => {
+              textRef.current = value;
+              searchLocation(textRef.current);
+            }}
+          />
+        </View>
+
+        <View style={{ flexDirection: "row", marginVertical: 12 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("MapScreen", {
+                type: "SEARCH_VIA_MAP",
+              });
+            }}
+            style={styles.selectViaMap}
+          >
+            <FontAwesome5 name="map-marked" size={12} color="white" />
+            <Text style={{ fontSize: 13, marginLeft: 5, color: "white" }}>
+              {" "}
+              Select Via Map
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <View style={{ flex: 1 }}>
+      <View style={styles.listContainer}>
         {searching ? (
           <Text>LOADING</Text>
         ) : (
           <FlatList
-            style={{ margin: 4 }}
-            numColumns={2}
             keyExtractor={(item) => item.locationId}
             data={searchResult}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("MapScreen", {
-                    type: "SEARCH",
-                    payload: {
-                      location: item,
-                    },
-                  })
-                }
-              >
-                <Text
-                  style={{ backgroundColor: "green", margin: 10, padding: 10 }}
-                >
-                  {" "}
-                  {item.label}{" "}
-                </Text>
-              </TouchableOpacity>
-            )}
+            renderItem={({ item }) => renderItem(item)}
           />
         )}
       </View>
@@ -149,3 +194,58 @@ const Search = () => {
 };
 
 export default Search;
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: color.gray2,
+  },
+  boxSeach: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: color.gray0,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: color.gray2,
+    padding: 8,
+    marginVertical: 5,
+  },
+  typeIcon: {
+    paddingHorizontal: 10,
+    fontSize: 22,
+    color: color.blueModern2,
+  },
+  type: {
+    fontSize: 16,
+  },
+  selectViaMap: {
+    flexDirection: "row",
+    backgroundColor: color.greenBlue,
+    borderRadius: 25,
+    borderColor: color.gray2,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+  },
+  listContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  itemLocation: {
+    flexDirection: "row",
+    paddingVertical: 22,
+    borderBottomWidth: 1,
+    borderBottomColor: color.gray2,
+  },
+  label: {
+    fontWeight: "bold",
+    paddingBottom: 3,
+    fontSize: 16,
+  },
+  describeItem: {
+    color: color.gray6,
+    fontSize: 14,
+  },
+});

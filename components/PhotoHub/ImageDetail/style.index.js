@@ -25,10 +25,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
+    borderRadius: 10,
   },
   textAction: {
     marginLeft: 5,
     fontSize: 18,
+    color: color.purpleDark,
   },
   tag: {
     marginVertical: 5,

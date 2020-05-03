@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 8,
     },
-    shadowOpacity: 0.44,
+    shadowOpacity: 1,
     shadowRadius: 10.32,
     elevation: 5,
     // overflow: 'scroll',

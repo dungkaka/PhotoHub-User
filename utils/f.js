@@ -40,6 +40,7 @@ export const color = {
 
   backgroundAndroid: "#f2f2f2",
 
+  gray0: "#fafafa",
   gray1: "#f2f2f2",
   gray2: "#e6e6e6",
   gray3: "#d1d1d1",

@@ -76,9 +76,10 @@ const Home = () => {
               }
             />
             <Item
+              onPress={() => navigation.navigate("ChatActive")}
               color1="#b39ddb"
               color2="#651fff"
-              text="Transport"
+              text="Active Chat"
               icon={
                 <FontAwesome name="bus" size={ICON_SIZE} style={styles.icon} />
               }
@@ -86,9 +87,10 @@ const Home = () => {
           </View>
           <View style={styles.row}>
             <Item
+              onPress={() => navigation.navigate("ChatInActive")}
               color1="#f48fb1"
               color2="#ff4081"
-              text="Shopping"
+              text="History"
               icon={
                 <FontAwesome
                   name="shopping-bag"

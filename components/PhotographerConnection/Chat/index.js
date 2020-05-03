@@ -1,11 +1,9 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import ChatScreen from './ChatScreen';
+import React from "react";
+import { View, Text } from "react-native";
+import Chat from "./Chat";
 
 const Container = () => {
-  return (
-    <ChatScreen/>
-  )
-}
+  return <Chat />;
+};
 
 export default Container;

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteImageFromCollection } from "../../../redux/actions/collection";
 import { useDidMountEffect } from "./../../../utils/custom-hook";
 import AddToCollectionButton from "./AddToCollectionButton";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 const ImageDetail = () => {
   const navigation = useNavigation();
@@ -23,6 +24,11 @@ const ImageDetail = () => {
   const collection = useSelector((store) => store.collection);
   const { image, images_snippet, collection_id } = route.params || {};
   const [loading, setLoading] = useState(false);
+  const images = [
+    {
+      url: image.url ? image.url : image.thumbnail_url,
+    },
+  ];
 
   useDidMountEffect(() => {
     if (loading) setLoading(false);
@@ -30,22 +36,6 @@ const ImageDetail = () => {
       console.log("HERE EE");
       navigation.goBack();
     }
-    // if (collection.error) {
-    //   Alert.alert(
-    //     "Alert",
-    //     collection.error,
-    //     [
-    //       {
-    //         text: "Cancel",
-    //         onPress: () => console.log("Cancel Pressed"),
-    //         style: "cancel",
-    //       },
-    //       { text: "OK", onPress: () => console.log("OK Pressed") },
-    //     ],
-
-    //     { cancelable: false }
-    //   );
-    // }
   }, [collection, loading]);
 
   return (
@@ -61,14 +51,15 @@ const ImageDetail = () => {
         style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end" }}
       >
         <View style={{ flex: 1 }}>
-          <Image
+          <ImageViewer imageUrls={images} />
+          {/* <Image
             source={{
               uri: image.url ? image.url : image.thumbnail_url,
               height: "100%",
               width: "100%",
             }}
             resizeMode="contain"
-          ></Image>
+          ></Image> */}
         </View>
         <View
           style={{
@@ -87,7 +78,7 @@ const ImageDetail = () => {
             onPress={() => {
               Alert.alert(
                 "Alert",
-                "Are you sure to logout !",
+                "Are you sure to delete image !",
                 [
                   {
                     text: "Cancel",
@@ -116,30 +107,6 @@ const ImageDetail = () => {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* <View>
-        <FlatList
-          style={{ margin: 3 }}
-          horizontal
-          keyExtractor={(item) => item.image_id.toString()}
-          data={images_snippet}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{ margin: 3 }}
-              onPress={() => navigation.setParams({ image: item })}
-            >
-              <Image
-                source={{
-                  uri: item.thumbnail_url,
-                  height: 120,
-                  width: 120,
-                }}
-                resizeMode="cover"
-              ></Image>
-            </TouchableOpacity>
-          )}
-        />
-      </View> */}
     </View>
   );
 };

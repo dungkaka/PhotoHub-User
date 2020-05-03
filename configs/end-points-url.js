@@ -60,4 +60,16 @@ export const URL = {
   SEARCH_NEARBY: () => {
     return preUrl + `booking/search`;
   },
+  GET_LIST_ACTIVE_CHAT: () => {
+    return preUrl + "chats/active-room";
+  },
+  GET_LIST_INACTIVE_CHAT: () => {
+    return preUrl + "chats/inactive-room";
+  },
+  DEACTIVATE_CHATROOM: (chatId) => {
+    return preUrl + `chats/${chatId}/deactivate`;
+  },
+  DELETE_CHATROOM: (chatId) => {
+    return preUrl + `chats/${chatId}`;
+  },
 };

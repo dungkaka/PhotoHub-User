@@ -1,46 +1,81 @@
-import React, { useRef, useEffect, useState } from "react";
-import { View, Text, Dimensions,  } from "react-native";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { View, Text, Dimensions, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
-import { useNavigation } from "@react-navigation/native";
-import { delay } from "../../../utils/f";
+import { delay, color } from "../../../utils/f";
+import { stickRef } from "./createRefModal";
 const window = Dimensions.get("window");
+import ContentLoader, {
+  Rect,
+  Circle,
+  Facebook,
+} from "react-content-loader/native";
 
-const ModalLoading = ({ visible }) => {
+const ModalLoading = forwardRef((props, ref) => {
   const refSearch = useRef();
   const [reLoad, setReLoad] = useState(false);
 
-  useEffect(() => {
-    switchModal(visible);
-  }, [visible]);
+  // useEffect(() => {
+  //   switchModal(visible);
+  // }, [visible]);
 
-  const switchModal = async (visible) => {
-    switch (visible) {
-      case true:
-        refSearch.current.snapTo(0);
-        await delay(100);
-        setReLoad(!reLoad);
-        break;
-      case false:
-        refSearch.current.snapTo(1);
-        await delay(100);
-        setReLoad(!reLoad);
-        break;
-      default:
-        break;
-    }
-  };
+  // const switchModal = async (visible) => {
+  //   switch (visible) {
+  //     case true:
+  //       await delay(2000);
+  //       refSearch.current.snapTo(0);
+  //       // await delay(2000);
+  //       // setReLoad(!reLoad);
+  //       break;
+  //     case false:
+  //       await delay(200);
+  //       refSearch.current.snapTo(1);
+  //       // await delay(100);
+  //       // setReLoad(!reLoad);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
+
+  useImperativeHandle(ref, () => ({
+    async open() {
+      await delay(350);
+      refSearch.current.snapTo(0);
+    },
+    async close() {
+      await delay(100);
+      refSearch.current.snapTo(1);
+    },
+  }));
 
   const renderSearch = () => (
-    <View
-      style={{
-        height: window.height * 0.3,
-        width: "100%",
-        backgroundColor: "white",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-      }}
-    >
-      <Text>LOADING</Text>
+    <View style={styles.headerContainer}>
+      <View style={styles.contentContainer}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          Wait a moment ...
+        </Text>
+
+        <View style={{ marginVertical: 10 }}>
+          <ContentLoader
+            speed={1}
+            width="100%"
+            height="100%"
+            backgroundColor={color.gray1}
+            foregroundColor="#ffffff"
+          >
+            <Rect x="0" y="10" rx="5" ry="5" width="100%" height="10" />
+            <Rect x="0" y="30" rx="5" ry="5" width="100%" height="10" />
+            <Rect x="0" y="50" rx="5" ry="5" width="100%" height="10" />
+            <Rect x="0" y="70" rx="5" ry="5" width="100%" height="10" />
+          </ContentLoader>
+        </View>
+      </View>
     </View>
   );
 
@@ -56,7 +91,7 @@ const ModalLoading = ({ visible }) => {
     >
       <BottomSheet
         ref={refSearch}
-        // initialSnap={visible ? 1 : 2}
+        initialSnap={1}
         snapPoints={["30%", 0]}
         renderContent={renderContent}
         renderHeader={renderSearch}
@@ -65,6 +100,23 @@ const ModalLoading = ({ visible }) => {
       />
     </View>
   );
-};
+});
 
-export default ModalLoading;
+export default stickRef(ModalLoading);
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    height: window.height * 0.5,
+    width: "100%",
+    backgroundColor: "transparent",
+  },
+  contentContainer: {
+    backgroundColor: "white",
+    flex: 1,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    elevation: 10,
+  },
+});

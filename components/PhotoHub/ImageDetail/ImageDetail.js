@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Image, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  TouchableHighlight,
+  Modal,
+} from "react-native";
 import { Button, Text } from "expo-ui-kit/src";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { styles } from "./style.index";
@@ -7,7 +14,6 @@ import { styles } from "./style.index";
 import SimilarItem from "./SimilarItem";
 import { random_color } from "../../../utils/f";
 import LikeImage from "./LikeImage";
-import AddToCollection from "./AddToCollection";
 import AddToCollectionButton from "./AddToCollectionButton";
 
 const ImageDetail = () => {
@@ -15,18 +21,26 @@ const ImageDetail = () => {
   // route fo from HubContainer
   const route = useRoute();
   const { image } = route.params || {};
+
   return (
     <ScrollView>
       <View>
         {/* Image */}
-        <Image
-          source={{
-            uri: image.url,
-            width: null,
-            height: 350,
-            scale: 0.05,
+
+        <TouchableHighlight
+          onPress={() => {
+            navigation.navigate("Image Zoom", { image: image });
           }}
-        ></Image>
+        >
+          <Image
+            source={{
+              uri: image.url,
+              width: null,
+              height: 380,
+              scale: 0.05,
+            }}
+          ></Image>
+        </TouchableHighlight>
 
         {/* Title Of Image */}
         <View
