@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -21,6 +21,12 @@ const ImageDetail = () => {
   // route fo from HubContainer
   const route = useRoute();
   const { image } = route.params || {};
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: image.name,
+    });
+  }, []);
 
   return (
     <ScrollView>

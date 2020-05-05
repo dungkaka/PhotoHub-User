@@ -13,6 +13,8 @@ import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import { hereKeyAPI } from "./../../../configs/placeAPI";
 import axios from "axios";
 import { useGoBackHandler } from "./../../../utils/custom-hook";
+import { LinearGradient } from "expo-linear-gradient";
+import { rainBowGradient, gradient } from "./../../../utils/gradient";
 
 const baseUrl =
   "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?";
@@ -167,13 +169,19 @@ const Search = () => {
                 type: "SEARCH_VIA_MAP",
               });
             }}
-            style={styles.selectViaMap}
           >
-            <FontAwesome5 name="map-marked" size={12} color="white" />
-            <Text style={{ fontSize: 13, marginLeft: 5, color: "white" }}>
-              {" "}
-              Select Via Map
-            </Text>
+            <LinearGradient
+              colors={gradient.aqua_splash}
+              start={[0, 0]}
+              end={[1, 1]}
+              style={styles.selectViaMap}
+            >
+              <FontAwesome5 name="map-marked" size={12} color="white" />
+              <Text style={{ fontSize: 13, marginLeft: 5, color: "white" }}>
+                {" "}
+                Select Via Map
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
@@ -223,7 +231,6 @@ const styles = StyleSheet.create({
   },
   selectViaMap: {
     flexDirection: "row",
-    backgroundColor: color.greenBlue,
     borderRadius: 25,
     borderColor: color.gray2,
     paddingHorizontal: 15,

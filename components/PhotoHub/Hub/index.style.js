@@ -5,9 +5,8 @@ export const styles = StyleSheet.create({
   imageView: {
     flex: 1,
     backgroundColor: "white",
-    borderRadius: 4,
+    borderRadius: 6,
     borderColor: "#ebebeb",
-    borderWidth: 1,
     overflow: "hidden",
   },
   tagTitle: {

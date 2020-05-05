@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, Animated } from "react-native";
+import { View, Dimensions, Image, Animated } from "react-native";
 import { ImageBackground } from "react-native";
 
 const Logo = require("./../../../assets/images/logo-3.png");
+const window = Dimensions.get("window");
 
 const Container = () => {
   const [logoAnimated, setLogoAnimated] = useState(new Animated.Value(0));
@@ -43,7 +44,9 @@ const Container = () => {
         <Image
           source={Logo}
           resizeMode="center"
-          style={{ margin: 10, transform: [{ scale: 1.5 }] }}
+          style={{
+            width: window.width * 0.6,
+          }}
         ></Image>
       </Animated.View>
     </ImageBackground>

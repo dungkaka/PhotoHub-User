@@ -18,6 +18,8 @@ import { color } from "../../utils/f";
 import { useDidMountEffect, useGoBackHandler } from "./../../utils/custom-hook";
 import Spinner from "react-native-loading-spinner-overlay";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { rainBowGradient } from "./../../utils/gradient";
 
 const { width: WIDTH } = Dimensions.get("window");
 
@@ -81,7 +83,7 @@ const Login = (props) => {
         <Image
           source={require("./../../assets/images/logo-4.png")}
           resizeMode="center"
-          style={{ transform: [{ scale: 1.5 }] }}
+          style={{ width: WIDTH * 0.6 }}
         ></Image>
       </View>
 
@@ -111,30 +113,52 @@ const Login = (props) => {
         </View>
 
         <TouchableOpacity
-          style={styles.btnLogin}
           onPress={() => {
             setLoading(true);
             dispatch(
-              login({ username: username.current, password: password.current })
+              login({
+                username: username.current,
+                password: password.current,
+              })
             );
           }}
         >
-          <Text style={styles.textLogin}> LOGIN </Text>
+          <LinearGradient
+            colors={rainBowGradient.red}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={styles.btnLogin}
+          >
+            <AntDesign
+              name="login"
+              size={24}
+              style={{ color: "white" }}
+            ></AntDesign>
+            <Text style={styles.textLogin}> LOGIN </Text>
+          </LinearGradient>
         </TouchableOpacity>
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            style={styles.btnGoHome}
+            style={{ flex: 1 }}
             onPress={() => {
               props.navigation.goBack();
             }}
           >
-            <AntDesign
-              name="arrowleft"
-              size={24}
-              style={{ color: "white" }}
-            ></AntDesign>
-            <Text style={styles.textGoHome}> BACK </Text>
+            <LinearGradient
+              style={styles.btnGoHome}
+              colors={rainBowGradient.green}
+              start={[0, 0]}
+              end={[1, 1]}
+            >
+              <AntDesign
+                name="arrowleft"
+                size={24}
+                style={{ color: "white" }}
+              ></AntDesign>
+
+              <Text style={styles.textGoHome}> BACK </Text>
+            </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnSignup}
@@ -176,6 +200,7 @@ const styles = StyleSheet.create({
   },
   btnLogin: {
     borderRadius: 25,
+    flexDirection: "row",
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
@@ -189,14 +214,16 @@ const styles = StyleSheet.create({
   },
   textLogin: {
     fontSize: 20,
-    color: color.redOrange,
+    color: "white",
     fontWeight: "bold",
+    marginHorizontal: 10,
+    letterSpacing: 1,
   },
   btnSignup: {
     flex: 1,
     marginLeft: 5,
     borderRadius: 25,
-    backgroundColor: color.redOrange,
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
@@ -208,7 +235,7 @@ const styles = StyleSheet.create({
   },
   textSignup: {
     fontSize: 20,
-    color: "white",
+    color: color.greenBlue,
     fontWeight: "bold",
   },
   btnGoHome: {

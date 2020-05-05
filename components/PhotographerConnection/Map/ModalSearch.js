@@ -23,6 +23,8 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { stickRef } from "./createRefModal";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient } from "./../../../utils/gradient";
 const window = Dimensions.get("window");
 
 const ModalSearch = forwardRef(({ getMyLocation, searchMyLocation }, ref) => {
@@ -69,15 +71,18 @@ const ModalSearch = forwardRef(({ getMyLocation, searchMyLocation }, ref) => {
             <Text style={styles.type}> Search for a location </Text>
           </View>
         </TouchableHighlight>
+
         <TouchableOpacity onPress={() => searchMyLocation()}>
-          <View
+          <LinearGradient
             style={[
               styles.typeLocation,
               {
                 borderColor: "transparent",
-                backgroundColor: color.greenBlue,
               },
             ]}
+            colors={gradient.aqua_splash}
+            start={[0, 0]}
+            end={[1, 1]}
           >
             <Entypo
               name="home"
@@ -87,7 +92,7 @@ const ModalSearch = forwardRef(({ getMyLocation, searchMyLocation }, ref) => {
               {" "}
               Your Location{" "}
             </Text>
-          </View>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     </View>

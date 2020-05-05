@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDidMountEffect } from "./../../../utils/custom-hook";
-import { useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -29,7 +29,6 @@ const LoadingIcon = ({ isIconAnimating }) => (
 );
 
 const HubContainer = ({ route }) => {
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const headerHeight = useHeaderHeight();
@@ -81,7 +80,6 @@ const HubContainer = ({ route }) => {
       dispatch(getListImage(tags.current, afterID));
     }
   };
-
 
   return (
     <View style={{ marginTop: 15, flex: 1 }}>
@@ -156,7 +154,7 @@ const HubContainer = ({ route }) => {
             image={item}
             width={200}
             height={200}
-            spaceBetween={4}
+            spaceBetween={5}
           ></ImageThumbnail>
         )}
         onRefresh={handleRefresh}

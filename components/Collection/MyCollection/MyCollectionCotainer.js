@@ -16,6 +16,8 @@ import CollectionThumnail from "./CollectionThumnail";
 import ModalAddCollection from "./ModalAddCollection";
 import { color } from "../../../utils/f";
 import { MaterialIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { rainBowGradient } from "./../../../utils/gradient";
 
 const MyCollectionContainer = () => {
   const navigation = useNavigation();
@@ -85,39 +87,45 @@ const MyCollectionContainer = () => {
           position: "absolute",
           bottom: 0,
           width: "100%",
-          backgroundColor: color.blueModernDark,
+          backgroundColor: "transparent",
           opacity: 0.9,
           shadowColor: "black",
           shadowOpacity: 1,
           elevation: 30,
         }}
       >
-        <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 15,
-          }}
+        <LinearGradient
+          colors={rainBowGradient.blue}
+          start={[0, 0]}
+          end={[1, 1]}
         >
-          <MaterialIcons
-            name="create-new-folder"
-            color="white"
-            size={26}
-          ></MaterialIcons>
-          <Text
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
             style={{
-              marginLeft: 10,
-              fontSize: 20,
-              fontWeight: "bold",
-              color: "white",
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 15,
             }}
           >
-            Create New Collection
-          </Text>
-        </TouchableOpacity>
+            <MaterialIcons
+              name="create-new-folder"
+              color="white"
+              size={26}
+            ></MaterialIcons>
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "white",
+              }}
+            >
+              Create New Collection
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </View>
     </View>
   );

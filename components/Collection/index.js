@@ -1,11 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Animated from "react-native-reanimated";
 import styles from "./index.style";
 import MyCollection from "./MyCollection/index";
 import CollectionDetail from "./CollectionDetail/CollectionDetail";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import ImageDetail from "./CollectionDetail/ImageDetail";
 import { color } from "../../utils/f";
 
@@ -45,17 +45,26 @@ const Collection = ({ navigation, style }) => {
           name="MyCollection"
           component={MyCollection}
           options={{
-            headerLeft: () => (
-              <FontAwesome
-                name="bars"
-                size={24}
+            headerLeft: ({ onPress }) => (
+              <TouchableOpacity
+                onPress={() => navigation.openDrawer()}
                 style={{
-                  marginLeft: 16,
+                  marginLeft: 20,
+                  alignContent: "center",
                 }}
-              ></FontAwesome>
+              >
+                <AntDesign
+                  name="menufold"
+                  size={24}
+                  color="#6486d3"
+                ></AntDesign>
+              </TouchableOpacity>
             ),
-            title: "My Collection",
+            title: "Collection",
             headerShown: true,
+            headerTitleStyle: {
+              color: "#6486d3",
+            },
           }}
         />
         <Stack.Screen
@@ -64,6 +73,7 @@ const Collection = ({ navigation, style }) => {
           options={{
             title: "Collection",
             headerShown: true,
+            headerTintColor: "#6486d3",
           }}
         />
         <Stack.Screen

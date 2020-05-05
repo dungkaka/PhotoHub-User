@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { stickRef } from "./createRefModal";
 import { delay } from "../../../utils/f";
 import { color } from "./../../../utils/f";
@@ -23,6 +23,8 @@ import CustomLinearGradient from "./../../Common/LinearGradient/index";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { haversine_distance } from "./../../../utils/map";
 const window = Dimensions.get("window");
+const avatar_1 =
+  "https://firebasestorage.googleapis.com/v0/b/photohub-e7e04.appspot.com/o/avatar%2Favatar_1.jpg?alt=media&token=3efbdede-a9ca-4bd6-95f3-9cd9383e6379";
 
 const ModalResult = forwardRef(
   ({ reset, nears, labelSearch, locationSearch }, ref) => {
@@ -55,17 +57,23 @@ const ModalResult = forwardRef(
                 <Image
                   style={styles.image}
                   source={{
-                    uri:
-                      "https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/p960x960/84350278_1095445474128998_221786128275996672_o.jpg?_nc_cat=111&_nc_sid=85a577&_nc_ohc=vF18WmVMXRsAX_gfbxs&_nc_ht=scontent.fhan3-1.fna&_nc_tp=6&oh=b5f9615e2090b88ff1e764e24fcd0b22&oe=5ED0FFE1",
+                    uri: avatar_1,
                   }}
                 ></Image>
 
                 <View style={styles.contentResult}>
-                  <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  <Text
+                    style={{ fontWeight: "bold", fontSize: 20, color: "white" }}
+                  >
                     Name: {name}
                   </Text>
-                  <Text style={{ color: color.gray8 }}>
-                    {" "}
+                  <Text
+                    style={{
+                      color: color.gray8,
+                      fontStyle: "italic",
+                      color: "white",
+                    }}
+                  >
                     {gender} - {age}
                   </Text>
                 </View>
@@ -76,20 +84,21 @@ const ModalResult = forwardRef(
                 <View style={styles.distance}>
                   <Text style={styles.numberDistance}>
                     {" "}
-                    {(1000 * distance).toFixed(0)}{" "}
+                    {(1000 * distance).toFixed(0)}
                   </Text>
-                  <Text style={styles.unit}> metter </Text>
+                  <Text style={styles.unit}> metter</Text>
                 </View>
 
                 <TouchableOpacity
                   style={styles.buttonConnect}
                   onPress={() => {
-                    navigation.navigate("Chat", {
+                    navigation.push("Chat", {
                       photographer: {
                         ...photographer.photographerInfor,
                         id: photographer.photographerId,
                       },
                       location: photographer,
+                      distance: distance,
                     });
                   }}
                 >
@@ -115,9 +124,22 @@ const ModalResult = forwardRef(
         >
           <AntDesign name="arrowleft" size={26}></AntDesign>
         </TouchableOpacity>
-        <Text style={styles.textLabelSearch}>
-          {labelSearch ? labelSearch : ""}
-        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginHorizontal: 10,
+          }}
+        >
+          <Entypo
+            name="location-pin"
+            size={20}
+            color={color.blueModern1}
+          ></Entypo>
+          <Text style={styles.textLabelSearch}>
+            {labelSearch ? labelSearch : ""}
+          </Text>
+        </View>
       </View>
     );
 
@@ -202,16 +224,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   textLabelSearch: {
-    marginHorizontal: 10,
-    borderRadius: 20,
-    borderColor: color.greenBlue,
-    borderWidth: 1,
-    paddingHorizontal: 15,
+    // marginHorizontal: 10,
+    // borderRadius: 20,
+    // borderColor: color.greenBlue,
+    // borderWidth: 1,
+    paddingHorizontal: 5,
     paddingVertical: 5,
-    color: color.greenBlue,
+    color: color.blueModern1,
     flex: 1,
     textAlignVertical: "center",
-    height: 30,
+    maxHeight: 60,
+    fontSize: 18,
   },
   containerResult: {
     marginVertical: 8,
@@ -256,9 +279,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     includeFontPadding: false,
     bottom: -3,
+    color: "white",
   },
   unit: {
-    color: color.gray8,
+    color: "white",
+    fontStyle: "italic",
     textAlignVertical: "bottom",
   },
   buttonConnect: {

@@ -17,6 +17,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { delay, color } from "../../../utils/f";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import { stickRef } from "./createRefModal";
+import { LinearGradient } from "expo-linear-gradient";
+import { gradient } from "./../../../utils/gradient";
 const window = Dimensions.get("window");
 
 const ModalSearchbySelect = forwardRef(({ reset, searchRegion }, ref) => {
@@ -70,18 +72,25 @@ const ModalSearchbySelect = forwardRef(({ reset, searchRegion }, ref) => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => searchRegion()}>
-        <View
+        <LinearGradient
           style={[
             styles.typeLocation,
-            { borderColor: "transparent", backgroundColor: color.greenBlue },
+            {
+              borderColor: "transparent",
+            },
           ]}
+          colors={gradient.aqua_splash}
+          start={[0, 0]}
+          end={[1, 1]}
         >
           <Entypo
-            name="home"
+            name="location-pin"
             style={[styles.typeIcon, { color: "white" }]}
           ></Entypo>
-          <Text style={[styles.type, { color: "white" }]}> Your Location </Text>
-        </View>
+          <Text style={[styles.type, { color: "white" }]}>
+            PICK UP LOCATION{" "}
+          </Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
@@ -103,7 +112,7 @@ const ModalSearchbySelect = forwardRef(({ reset, searchRegion }, ref) => {
       <BottomSheet
         ref={refSearch}
         initialSnap={1}
-        snapPoints={["30%", 0]}
+        snapPoints={["25%", 0]}
         renderContent={renderContent}
         renderHeader={renderSearch}
         enabledGestureInteraction={false}
@@ -126,8 +135,8 @@ const styles = StyleSheet.create({
   },
   typeLocation: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
-    width: "100%",
     backgroundColor: color.gray0,
     borderRadius: 25,
     borderWidth: 1,
@@ -142,7 +151,10 @@ const styles = StyleSheet.create({
     color: color.blueModern2,
   },
   type: {
-    fontSize: 14,
+    fontSize: 18,
+    letterSpacing: 1,
+    fontWeight: "bold",
     color: color.gray5,
+    textAlign: "center",
   },
 });

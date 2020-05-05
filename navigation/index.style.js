@@ -16,7 +16,12 @@ const styles = StyleSheet.create({
   },
   drawerStyles: { flex: 1, width: "50%", backgroundColor: "transparent" },
   drawerItem: { alignItems: "flex-start", marginVertical: 0 },
-  drawerLabel: { color: "white", fontSize: 16, fontWeight: "900" },
+  drawerLabel: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "900",
+    letterSpacing: 0.5,
+  },
   avatar: {
     borderRadius: 60,
     marginBottom: 16,

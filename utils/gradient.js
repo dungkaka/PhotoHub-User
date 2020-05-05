@@ -1,6 +1,6 @@
 import { random_item } from "./f";
 
-const gradient = {
+export const gradient = {
   warm_flame: ["#ff9a9e", "#fad0c4"],
   juicy_peach: ["#ffecd2", "#fcb69f"],
   lady_lips: ["#ff9a9e", "#fecfef"],
@@ -11,6 +11,14 @@ const gradient = {
   aqua_splash: ["#13547a", "#80d0c7"],
   passionate_bed: ["#ff758c", "#ff7eb3"],
   desert_hump: ["#c79081", "#dfa579"],
+};
+
+export const rainBowGradient = {
+  red: ["#e55151", "#ff9e9e"],
+  yellow: ["#ff9300", "#fdcc2b"],
+  blue: ["#6486d3", "#82cdfd"],
+  purple: ["#d364a9", "#fd9ef9"],
+  green: ["#5baf5b", "#96e89d"],
 };
 
 const gradientArray = [
@@ -26,6 +34,22 @@ const gradientArray = [
   gradient.desert_hump,
 ];
 
+const rainbowGradientArray = [
+  rainBowGradient.red,
+  rainBowGradient.red,
+  rainBowGradient.yellow,
+  rainBowGradient.blue,
+  rainBowGradient.blue,
+  rainBowGradient.blue,
+  rainBowGradient.purple,
+  rainBowGradient.purple,
+  rainBowGradient.green,
+];
+
 export const random_gradient = () => {
   return random_item(gradientArray);
+};
+
+export const random_rainbowGradient = () => {
+  return random_item(rainbowGradientArray);
 };

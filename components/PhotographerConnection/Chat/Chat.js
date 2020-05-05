@@ -1,94 +1,137 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { firestoreRef } from "../../../configs/firebase-config";
-import { useRoute } from "@react-navigation/native";
-import { GiftedChat, Avatar, utils } from "react-native-gifted-chat";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import {
+  GiftedChat,
+  Avatar,
+  utils,
+  Bubble,
+  InputToolbar,
+  Actions,
+  Send,
+  Message,
+  MessageText,
+} from "react-native-gifted-chat";
 import CustomLinearGradient from "./../../Common/LinearGradient/index";
 import { color } from "../../../utils/f";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Facebook } from "react-content-loader/native";
+import customAlert from "./../../Common/CustomAlert/index";
+import { random_rainbowGradient } from "../../../utils/gradient";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { isSameUser, isSameDay } = utils;
 
 const chatRef = firestoreRef.collection("chat");
+const avatar_1 =
+  "https://firebasestorage.googleapis.com/v0/b/photohub-e7e04.appspot.com/o/avatar%2Favatar_1.jpg?alt=media&token=3efbdede-a9ca-4bd6-95f3-9cd9383e6379";
+const avatar_2 =
+  "https://firebasestorage.googleapis.com/v0/b/photohub-e7e04.appspot.com/o/avatar%2Favatar_2.jpg?alt=media&token=f35731bb-90d0-4a6c-83e6-2192a2742f43";
 
 console.disableYellowBox = true;
 
 const Chat = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const user = useSelector((store) => store.user.user);
   const { photographer, location, distance } = route.params ? route.params : {};
   const { name, age, gender, address } = photographer;
+  const randomGradient = random_rainbowGradient();
 
   return (
-    <View style={{ flex: 1 }}>
-      <CustomLinearGradient>
+    <View style={{ flex: 1, backgroundColor: color.backgroundAndroid }}>
+      <LinearGradient colors={randomGradient} start={[0, 0]} end={[1, 1]}>
         <View style={styles.result}>
           {/* Image and detail of photogeapher */}
           <View style={styles.topResult}>
             <TouchableOpacity
-              onPress={() => onPress()}
+              onPress={() => navigation.goBack()}
               style={{
-                opacity: 0.8,
-                backgroundColor: "white",
                 padding: 6,
+                marginRight: 5,
                 alignContent: "center",
               }}
             >
-              <AntDesign name="arrowleft" size={24}></AntDesign>
+              <AntDesign name="arrowleft" size={24} color="white"></AntDesign>
             </TouchableOpacity>
             <Image
               style={styles.image}
               source={{
-                uri:
-                  "https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/p960x960/84350278_1095445474128998_221786128275996672_o.jpg?_nc_cat=111&_nc_sid=85a577&_nc_ohc=vF18WmVMXRsAX_gfbxs&_nc_ht=scontent.fhan3-1.fna&_nc_tp=6&oh=b5f9615e2090b88ff1e764e24fcd0b22&oe=5ED0FFE1",
+                uri: avatar_1,
               }}
             ></Image>
 
             <View style={styles.contentResult}>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                Name: {name}
-              </Text>
-              <Text style={{ color: color.gray8 }}>
-                {" "}
-                {gender} - {age}
+              <Text
+                style={{ fontWeight: "bold", fontSize: 18, color: "white" }}
+              >
+                {name}
               </Text>
             </View>
           </View>
 
           {/* Distane and go to connect */}
           <View style={styles.bottomResult}>
-            <View style={styles.distance}>
-              <Text style={styles.numberDistance}>
-                {" "}
-                {(1000 * distance).toFixed(0)}{" "}
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: "white", letterSpacing: 1 }}>
+                Infomation:
               </Text>
-              <Text style={styles.unit}> metter </Text>
+              {gender ? (
+                <Text
+                  style={{
+                    color: "white",
+                    letterSpacing: 1,
+                    fontStyle: "italic",
+                  }}
+                >
+                  {gender} - {age}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    color: "white",
+                    letterSpacing: 1,
+                    fontStyle: "italic",
+                  }}
+                >
+                  I'm photographer
+                </Text>
+              )}
             </View>
-
-            <TouchableOpacity
-              style={styles.buttonConnect}
-              onPress={() => {
-                navigation.navigate("Chat", {
-                  photographer: {
-                    ...photographer.photographerInfor,
-                    id: photographer.photographerId,
-                  },
-                  location: photographer,
-                });
-              }}
-            >
-              <Text style={styles.textConnect}>Connect</Text>
-            </TouchableOpacity>
+            <View style={styles.distance}>
+              <Text
+                style={[styles.numberDistance, { color: randomGradient[0] }]}
+              >
+                {(1000 * distance).toFixed(0)}
+              </Text>
+              <Text style={[styles.unit, { color: randomGradient[0] }]}>
+                {" "}
+                metter{" "}
+              </Text>
+            </View>
           </View>
         </View>
-      </CustomLinearGradient>
-      <ChatScreen user={user} photographer={photographer} location={location} />
+      </LinearGradient>
+      <ChatScreen
+        user={user}
+        photographer={photographer}
+        location={location}
+        randomGradient={randomGradient}
+      />
     </View>
   );
 };
 
-const ChatScreen = ({ user, photographer, location }) => {
+const ChatScreen = ({ user, photographer, randomGradient }) => {
   const roomChat = useRef();
   const [fetchingRoom, setFetchingRoom] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -183,7 +226,6 @@ const ChatScreen = ({ user, photographer, location }) => {
       }
     };
     accessRoomchat();
-
     return () => {
       unsubcribeChatRoom();
     };
@@ -200,11 +242,92 @@ const ChatScreen = ({ user, photographer, location }) => {
         onSend={(messages) => onSend(messages)}
         user={{
           _id: user.id,
-          name: user.name,
-          avatar:
-            "https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/p960x960/84350278_1095445474128998_221786128275996672_o.jpg?_nc_cat=111&_nc_sid=85a577&_nc_ohc=vF18WmVMXRsAX_gfbxs&_nc_ht=scontent.fhan3-1.fna&_nc_tp=6&oh=b5f9615e2090b88ff1e764e24fcd0b22&oe=5ED0FFE1",
+          name: user.name ? user.name : user.username,
+          avatar: user.gender == "male" ? avatar_1 : avatar_2,
         }}
         renderTime={() => null}
+        renderBubble={(props) => (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              right: {
+                backgroundColor: "transparent",
+                overflow: "hidden",
+                margin: 1,
+              },
+              left: {
+                backgroundColor: color.gray2,
+                overflow: "hidden",
+                margin: 1,
+              },
+            }}
+          />
+        )}
+        renderMessage={(props) => <Message {...props} />}
+        renderMessageText={(props) => (
+          <LinearGradient colors={randomGradient} start={[0, 0]} end={[1, 1]}>
+            <MessageText
+              {...props}
+              containerStyle={{
+                right: {
+                  margin: 0,
+                  padding: 3,
+                },
+                left: {
+                  margin: 0,
+                  padding: 3,
+                  backgroundColor: color.gray2,
+                },
+              }}
+            />
+          </LinearGradient>
+        )}
+        renderInputToolbar={(props) => (
+          <InputToolbar
+            {...props}
+            containerStyle={{
+              flex: 1,
+              backgroundColor: "white",
+              borderTopColor: "transparent",
+              borderTopWidth: 0,
+              padding: 3,
+            }}
+          />
+        )}
+        renderActions={(props) => (
+          <Actions
+            {...props}
+            style={{
+              borderRadius: 10,
+              backgroundColor: color.blueModern1,
+            }}
+            onPressActionButton={() =>
+              customAlert("Function have not implement yet!")
+            }
+          />
+        )}
+        renderSend={(props) => (
+          <Send
+            {...props}
+            containerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: color.blueModern1,
+                borderRadius: 25,
+                marginHorizontal: 10,
+                paddingHorizontal: 15,
+                paddingVertical: 5,
+              }}
+            >
+              <Ionicons name="md-send" color="white" size={20} />
+            </View>
+          </Send>
+        )}
+        renderLoading={() => <Facebook />}
       />
     </View>
   );
@@ -215,13 +338,14 @@ export default Chat;
 const styles = StyleSheet.create({
   result: {
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: StatusBar.currentHeight + 5,
+    paddingBottom: 10,
     flexDirection: "column",
   },
   image: {
     borderRadius: 200,
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 35,
   },
   contentResult: {
     paddingStart: 15,
@@ -236,13 +360,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "flex-end",
     paddingHorizontal: 10,
-    marginTop: 10,
     marginBottom: 5,
   },
   distance: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "flex-end",
+    backgroundColor: "white",
+    borderRadius: 100,
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+    paddingTop: 5,
   },
   numberDistance: {
     fontSize: 30,
@@ -251,16 +378,7 @@ const styles = StyleSheet.create({
     bottom: -3,
   },
   unit: {
-    color: color.gray8,
-    textAlignVertical: "bottom",
-  },
-  buttonConnect: {
-    backgroundColor: color.greenBlue,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-  },
-  textConnect: {
     color: "white",
+    textAlignVertical: "bottom",
   },
 });

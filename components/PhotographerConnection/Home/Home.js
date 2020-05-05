@@ -4,24 +4,30 @@ import {
   StyleSheet,
   Dimensions,
   View,
-  StatusBar,
+  ImageBackground,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 const W = Dimensions.get("window").width;
 const H = Dimensions.get("window").height;
 
-const ICON_SIZE = 26;
+const ICON_SIZE = 28;
 
 const HeaderBlock = () => (
   <View>
     <LinearGradient
-      colors={["#f48fb1", "#ff4081"]}
+      colors={["#34c5a7", "#4f85d5"]}
       style={styles.headerBlock}
+      start={{ x: 0.0, y: 0.25 }}
+      end={{ x: 0.5, y: 1.0 }}
     />
   </View>
 );
@@ -48,71 +54,81 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <StatusBar barStyle="light-content" /> */}
-      <View style={styles.container}>
-        <HeaderBlock />
+      <ImageBackground
+        source={require("./../../../assets/images/background-1.png")}
+        resizeMode="cover"
+        style={{
+          flex: 1,
+        }}
+      >
+        <View style={styles.container}>
+          <HeaderBlock />
 
-        <View flex={1} style={{ backgroundColor: "transparent" }}></View>
-        <View style={styles.headerTextContainer}>
-          <View height={20} />
-          <Text style={styles.headerText}>SEARCH CAMERAMAN</Text>
-          <View height={5} />
-          <Text style={styles.subHeaderText}>Let's have fun !</Text>
-        </View>
+          <View flex={1} style={{ backgroundColor: "transparent" }}></View>
+          <View style={styles.headerTextContainer}>
+            <View height={20} />
+            <Text style={styles.headerText}>SEARCH CAMERAMAN</Text>
+            <View height={5} />
+            <Text style={styles.subHeaderText}>Let's have fun !</Text>
+          </View>
 
-        <View style={styles.block}>
-          <View style={styles.row}>
-            <Item
-              onPress={() => navigation.navigate("MapScreen")}
-              color1="#81d4fa"
-              color2="#039be5"
-              text="General"
-              icon={
-                <AntDesign
-                  name="appstore1"
-                  size={ICON_SIZE}
-                  style={styles.icon}
-                />
-              }
-            />
-            <Item
-              onPress={() => navigation.navigate("ChatActive")}
-              color1="#b39ddb"
-              color2="#651fff"
-              text="Active Chat"
-              icon={
-                <FontAwesome name="bus" size={ICON_SIZE} style={styles.icon} />
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <Item
-              onPress={() => navigation.navigate("ChatInActive")}
-              color1="#f48fb1"
-              color2="#ff4081"
-              text="History"
-              icon={
-                <FontAwesome
-                  name="shopping-bag"
-                  size={ICON_SIZE}
-                  style={styles.icon}
-                />
-              }
-            />
-            <Item
-              color1="#ffcc80"
-              color2="#ff6d00"
-              text="Bills"
-              icon={
-                <FontAwesome
-                  name="file-text"
-                  size={ICON_SIZE}
-                  style={styles.icon}
-                />
-              }
-            />
-          </View>
-          {/* <View style={styles.row}>
+          <View style={styles.block}>
+            <View style={styles.row}>
+              <Item
+                onPress={() => navigation.navigate("MapScreen")}
+                color1="#1D976C"
+                color2="#93F9B9"
+                text="Search"
+                icon={
+                  <AntDesign
+                    name="search1"
+                    size={ICON_SIZE}
+                    style={styles.icon}
+                  />
+                }
+              />
+              <Item
+                onPress={() => navigation.navigate("ChatActive")}
+                color1="#E94057"
+                color2="#F27121"
+                text="Active Chat"
+                icon={
+                  <AntDesign
+                    name="message1"
+                    size={ICON_SIZE}
+                    style={styles.icon}
+                  />
+                }
+              />
+            </View>
+            <View style={styles.row}>
+              <Item
+                onPress={() => navigation.navigate("ChatInActive")}
+                color1="#2193b0"
+                color2="#6dd5ed"
+                text="History"
+                icon={
+                  <MaterialCommunityIcons
+                    name="message-bulleted-off"
+                    size={ICON_SIZE}
+                    style={styles.icon}
+                  />
+                }
+              />
+              <Item
+                color1="#6a3093"
+                color2="#a044ff"
+                text="Bills"
+                icon={
+                  <FontAwesome
+                    name="file-text"
+                    size={ICON_SIZE}
+                    style={styles.icon}
+                  />
+                }
+              />
+            </View>
+            {/* <View style={styles.row}>
             <Item
               color1="#90caf9"
               color2="#2962ff"
@@ -134,8 +150,9 @@ const Home = () => {
               }
             />
           </View> */}
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -145,17 +162,17 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1B1B2E",
+    backgroundColor: "transparent",
   },
 
   headerBlock: {
     position: "absolute",
-    marginLeft: -W * 0.5,
-    marginTop: H * 0.65,
-    width: W * 1.2,
-    height: H * 0.5,
+    marginLeft: -W * 0.6,
+    marginTop: H * 0.6,
+    width: W * 1.3,
+    height: H * 0.7,
     backgroundColor: "#ff4081",
-    borderRadius: 60,
+    borderRadius: 300,
     transform: [{ rotateX: "0deg" }, { rotateZ: "-45deg" }],
   },
 
@@ -175,9 +192,9 @@ const styles = StyleSheet.create({
 
   iconContainer: {
     marginTop: 16,
-    height: 64,
-    width: 64,
-    borderRadius: 32,
+    height: 72,
+    width: 72,
+    borderRadius: 36,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -191,7 +208,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: W / 2 - 30,
     height: W / 2 - 20,
-    backgroundColor: `rgba(40, 43, 71, 0.9)`,
+    backgroundColor: `rgba(60, 50, 100, 0.6)`,
     borderRadius: 24,
   },
 
@@ -199,5 +216,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
 
-  text: { fontWeight: "700" },
+  text: { fontWeight: "700", fontSize: 16 },
 });

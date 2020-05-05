@@ -13,7 +13,7 @@ const ImageThumbnail = (props) => {
     <View style={{ flex: 0.5, height: props.height }}>
       <TouchableOpacity
         style={[styles.imageView, { margin: props.spaceBetween }]}
-        onPress={() => navigation.push("Image Detail", {image: props.image})}
+        onPress={() => navigation.push("Image Detail", { image: props.image })}
       >
         <Image
           style={styles.image}
@@ -29,7 +29,7 @@ const ImageThumbnail = (props) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            paddingHorizontal: 5,
+            paddingHorizontal: 8,
           }}
         >
           <Text style={{ color: "dimgray" }}>{name}</Text>

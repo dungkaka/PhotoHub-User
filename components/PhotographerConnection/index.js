@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MapContainer from "./Map/index";
 import Animated from "react-native-reanimated";
@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const PhotographerConnection = ({ navigation, style }) => {
   return (
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
-      <Stack.Navigator headerMode="float">
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={Home}
@@ -32,10 +32,6 @@ const PhotographerConnection = ({ navigation, style }) => {
                   // backgroundColor: "white",
                   padding: 10,
                   borderRadius: 10,
-                  shadowColor: "black",
-                  shadowOpacity: 0.8,
-                  shadowRadius: 5,
-                  elevation: 5,
                   alignContent: "center",
                 }}
               >
@@ -127,21 +123,31 @@ const PhotographerConnection = ({ navigation, style }) => {
                 style={{
                   opacity: 0.8,
                   marginLeft: 16,
-                  backgroundColor: "white",
                   padding: 6,
-                  borderRadius: 100,
-                  shadowColor: "black",
-                  shadowOpacity: 0.8,
-                  shadowRadius: 5,
-                  elevation: 5,
                   alignContent: "center",
                 }}
               >
-                <AntDesign name="arrowleft" size={24}></AntDesign>
+                <AntDesign name="arrowleft" size={24} color="white"></AntDesign>
               </TouchableOpacity>
             ),
-            headerTransparent: false,
-            headerTitle: null,
+            headerRight: ({ onPress }) => (
+              <View
+                onPress={() => onPress()}
+                style={{
+                  opacity: 0.8,
+                  marginRight: 20,
+                  padding: 6,
+                  alignContent: "center",
+                }}
+              >
+                <AntDesign name="wechat" size={24} color="white"></AntDesign>
+              </View>
+            ),
+            headerTransparent: true,
+            headerTitle: "Chats",
+            headerTitleStyle: {
+              color: "white",
+            },
           }}
         />
 
@@ -155,21 +161,31 @@ const PhotographerConnection = ({ navigation, style }) => {
                 style={{
                   opacity: 0.8,
                   marginLeft: 16,
-                  backgroundColor: "white",
                   padding: 6,
-                  borderRadius: 100,
-                  shadowColor: "black",
-                  shadowOpacity: 0.8,
-                  shadowRadius: 5,
-                  elevation: 5,
                   alignContent: "center",
                 }}
               >
-                <AntDesign name="arrowleft" size={24}></AntDesign>
+                <AntDesign name="arrowleft" size={24} color="white"></AntDesign>
               </TouchableOpacity>
             ),
-            headerTransparent: false,
-            headerTitle: null,
+            headerRight: ({ onPress }) => (
+              <View
+                onPress={() => onPress()}
+                style={{
+                  opacity: 0.8,
+                  marginRight: 20,
+                  padding: 6,
+                  alignContent: "center",
+                }}
+              >
+                <AntDesign name="wechat" size={24} color="white"></AntDesign>
+              </View>
+            ),
+            headerTransparent: true,
+            headerTitle: "Bin",
+            headerTitleStyle: {
+              color: "white",
+            },
           }}
         />
       </Stack.Navigator>
